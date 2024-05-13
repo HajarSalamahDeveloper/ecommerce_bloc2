@@ -10,7 +10,7 @@ part 'product_state.dart';
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductRepository productRepository;
   List<ProductModel> products = [];
-  ProductBloc(this.productRepository) : super(ProductInitial()) {
+  ProductBloc({required this.productRepository}) : super(ProductInitial()) {
     on<ProductEvent>((event, emit) async {
       if (event is GetAllProducts) {
         emit(ProductLoading(messageLoading: "Loading...."));

@@ -2,15 +2,21 @@ import 'package:ecommerce_bloc/route_mangment/app_rout_managment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+import 'app/inj_depen.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupDependencyInjection();
   runApp(MyApp(
-    appRouter: AppRoutes(),
-  ));
+      // appRouter: AppRoutes(),
+      ));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key, required this.appRouter});
-  final AppRoutes appRouter;
+  MyApp({
+    super.key,
+  });
+  // final AppRoutes appRouter;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -19,9 +25,9 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (_, child) {
-          return MaterialApp(
+          return const MaterialApp(
             debugShowCheckedModeBanner: false,
-            onGenerateRoute: appRouter.generateRoute,
+            onGenerateRoute: AppRoutes.generateRoute,
           );
         });
   }

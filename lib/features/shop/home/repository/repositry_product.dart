@@ -6,8 +6,8 @@ import 'package:ecommerce_bloc/features/shop/home/repository/repostary_product_b
 import '../../../../services_network/services.dart';
 
 class ProductRepository extends ProductRepositoryImp {
-  ApiServices apiService = ApiServices();
-
+  final ApiServices apiService;
+  ProductRepository({required this.apiService});
   @override
   Future<List<ProductModel>> productsApi() async {
     try {

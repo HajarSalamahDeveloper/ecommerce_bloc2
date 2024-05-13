@@ -1,3 +1,4 @@
+import 'package:ecommerce_bloc/app/inj_depen.dart';
 import 'package:ecommerce_bloc/features/navgation_button_bar/bloc/navgation_bottom_bar_bloc.dart';
 import 'package:ecommerce_bloc/features/shop/home/model/product_model.dart';
 import 'package:ecommerce_bloc/features/shop/home/screen/home_screen.dart';
@@ -10,28 +11,29 @@ import '../features/navgation_button_bar/screen_nav.dart';
 import '../features/shop/cart/screen/cart_screen.dart';
 import '../features/shop/favorite/screen/favorit_screen.dart';
 import '../features/shop/home/controller/bloc/product_bloc.dart';
-import '../features/shop/home/repository/repositry_product.dart';
 import 'AppRoute.dart';
 
 class AppRoutes {
-  late ProductRepository productRepository;
-  late NavgationBottomBarBloc navBottomBloc;
-  late ProductBloc productBloc;
+  // late ProductRepository productRepository;
+  // late NavgationBottomBarBloc navBottomBloc;
+  // late ProductBloc productBloc;
 
-  AppRoutes() {
-    navBottomBloc = NavgationBottomBarBloc();
-    productRepository = ProductRepository();
-    productBloc = ProductBloc(productRepository);
-  }
-  Route<dynamic>? generateRoute(RouteSettings settings) {
+  // AppRoutes() {
+  //   // navBottomBloc = NavgationBottomBarBloc();
+  //   // productRepository = ProductRepository();
+  //   // productBloc = ProductBloc(productRepository);
+  // }
+  static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case AppRoute.homeScreenNav:
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(providers: [
-                  BlocProvider.value(value: productBloc..add(GetAllProducts())),
-                  BlocProvider.value(value: navBottomBloc),
+                  BlocProvider(
+                      create: (_) =>
+                          getIt<ProductBloc>()..add(GetAllProducts())),
+                  BlocProvider(create: (_) => getIt<NavgationBottomBarBloc>()),
                 ], child: HomeScreenBottomNav()));
       case AppRoute.homepage:
         return MaterialPageRoute(
